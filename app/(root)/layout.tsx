@@ -32,7 +32,7 @@ export default function RootLayout({
       }}
     >
       <html lang="en">
-        <body className={`${ubuntu.className} bg-dark-1`}>
+        <body className={`${ubuntu.className} bg-dark-1`}> 
           <Topbar />
           <main className="flex flex-row">
             <LeftSidebar />
