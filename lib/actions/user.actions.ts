@@ -26,7 +26,7 @@ export async function updateUser({userId, username, name, bio, image, path}:Para
                 name,
                 bio,
                 image,
-                onboarded: true,
+                onboard: true,
             },
             {
                 upsert: true

@@ -4,10 +4,11 @@ import { redirect } from "next/navigation";
 import ThreadCard from "@/components/cards/ThreadCard";
 import { fetchPosts } from "@/lib/actions/thread.action";
 import { fetchUser } from "@/lib/actions/user.actions";
+import ShareButton from "@/components/shared/ShareButton";
 
 async function Home() {
   const user = await currentUser();
-  if (!user) return null;
+  if (!user) redirect('/sign-in');
 
   const userInfo = await fetchUser(user.id);
   if (!userInfo?.onboard) redirect("/onboarding");
@@ -26,8 +27,8 @@ async function Home() {
             {result.posts.map((post) => (
               <ThreadCard
                 key={post._id}
-                id={post._id}
-                currentUserId={user.id}
+                id={post._id.toString()}
+                currentUserId={userInfo?._id.toString()}
                 parentId={post.parentId}
                 content={post.text}
                 author={post.author}
@@ -38,6 +39,7 @@ async function Home() {
             ))}
           </>
         )}
+
       </section>
     </>
     
