@@ -3,9 +3,10 @@
 @tailwind utilities;
 
 @layer components {
+
   /* main */
   .main-container {
-    @apply flex min-h-screen flex-1 flex-col items-center bg-dark-1 px-6 pb-10 pt-28 max-md:pb-32 sm:px-10;
+    @apply flex min-h-screen flex-1 flex-col items-center px-6 pb-10 pt-28 max-md:pb-32 sm:px-10;
   }
 
   /* Head Text */
@@ -41,7 +42,8 @@
   .user-card {
     @apply flex flex-col justify-between gap-4 max-xs:rounded-xl max-xs:bg-dark-3 max-xs:p-4 xs:flex-row xs:items-center;
   }
-  .sidebarCard{
+
+  .sidebarCard {
     @apply flex flex-col justify-between gap-1 max-xs:rounded-xl max-xs:bg-dark-3 max-xs:p-4 xs:flex-row xs:items-center;
   }
 
@@ -54,19 +56,21 @@
   }
 
   .searchbar {
-    @apply flex gap-1 rounded-lg bg-dark-3 px-4 py-2;
+    @apply flex gap-1 rounded-lg bg-dark-3 px-4 py-2 backdrop-blur-lg;
   }
 
   .searchbar_input {
     @apply border-none bg-dark-3 text-base-regular text-light-4 outline-none !important;
   }
 
+
+
   .topbar {
-    @apply fixed top-0 z-30 flex w-full items-center justify-between bg-dark-2 px-6 py-3;
+    @apply fixed top-0 z-30 flex w-full items-center justify-between px-6 py-3 bg-opacity-80 backdrop-blur-lg shadow-md shadow-gray-800;
   }
 
   .bottombar {
-    @apply fixed bottom-0 z-10 w-full rounded-t-3xl bg-glassmorphism p-4 backdrop-blur-lg xs:px-7 md:hidden;
+    @apply fixed bottom-0 z-10 bg-opacity-70 w-full rounded-t-3xl bg-glassmorphism p-4 backdrop-blur-lg xs:px-7 md:hidden;
   }
 
   .bottombar_container {
@@ -78,7 +82,7 @@
   }
 
   .leftsidebar {
-    @apply sticky left-0 top-0 z-20 flex h-screen w-fit flex-col justify-between overflow-auto border-r border-r-dark-4 bg-dark-2 pb-5 pt-28 max-md:hidden;
+    @apply sticky left-0 top-0 z-20 flex h-screen w-fit flex-col justify-between bg-opacity-70 backdrop-blur-lg overflow-auto border-r border-r-dark-4 bg-dark-2 pb-5 pt-28 max-md:hidden;
   }
 
   .leftsidebar_link {
@@ -90,7 +94,7 @@
   }
 
   .rightsidebar {
-    @apply sticky right-0 top-0 z-20 flex h-screen w-fit flex-col justify-between gap-12 overflow-auto border-l border-l-dark-4 bg-dark-2 px-10 pb-6 pt-28 max-xl:hidden;
+    @apply sticky right-0 top-0 z-20 flex h-screen w-fit flex-col bg-opacity-70 backdrop-blur-lg justify-between gap-12 overflow-auto border-l border-l-dark-4 bg-dark-2 px-10 pb-6 pt-28 max-xl:hidden;
   }
 }
 
@@ -124,9 +128,7 @@
   @apply max-sm:hidden;
 }
 
-.cl-organizationSwitcherTrigger
-  .cl-organizationPreview
-  .cl-organizationPreviewTextContainer {
+.cl-organizationSwitcherTrigger .cl-organizationPreview .cl-organizationPreviewTextContainer {
   @apply max-sm:hidden;
 }
 
@@ -161,4 +163,59 @@
 
 .comment-form_btn {
   @apply rounded-3xl bg-primary-500 px-8 py-2 !text-small-regular text-light-1 max-xs:w-full !important;
+}
+
+.sidebar_left_class:hover {
+  box-shadow: inset 0 4px 6px rgba(215, 212, 212, 0.1),
+    /* Subtle inner shadow */
+    inset 0 -4px 6px #0653B1;
+  background: linear-gradient(145deg, #022044, #0653B1);
+  /* Light gradient for a glossy effect */
+}
+
+.sidebar_left_class_active {
+  box-shadow: inset 0 4px 6px rgba(215, 212, 212, 0.1),
+    /* Subtle inner shadow */
+    inset 0 -4px 6px #0653B1;
+  background: linear-gradient(145deg, #022044, #0653B1);
+  /* Light gradient for a glossy effect */
+}
+
+.sidebar_right_card {
+  box-shadow: inset 0 4px 6px rgba(215, 212, 212, 0.1),
+    inset 0 -4px 6px #0653b11f;
+  background: linear-gradient(145deg, #5091e117, #ffffff0d);
+  @apply p-2 rounded-lg zoom-in-hover5
+}
+
+.zoom-in-hover {
+  @apply hover:scale-110 transition-transform duration-300 ease-in-out;
+}
+
+.zoom-in-hover5 {
+  @apply hover:scale-110 transition-transform duration-300 ease-in-out;
+}
+
+
+.thread_card_bg {
+  box-shadow: inset 0 4px 6px rgba(215, 212, 212, 0.249),
+    inset 0 -4px 6px #0653b137;
+  background: linear-gradient(145deg, #468fe818, #121417);
+  @apply p-7 rounded-lg hover:z-[1.01] transition-transform duration-300 ease-in-out;
+}
+
+
+.user_card_bg {
+  box-shadow: inset 0 4px 6px rgba(215, 212, 212, 0.1),
+    inset 0 -4px 6px #0653b11f;
+  background: linear-gradient(145deg, #5091e117, #ffffff0d);
+  @apply p-2 rounded-lg hover:scale-[1.01] hover:cursor-pointer transition-transform duration-300 ease-in-out;
+}
+
+
+.activity_card_bg {
+  box-shadow: inset 0 4px 6px rgba(215, 212, 212, 0.249),
+    inset 0 -4px 6px #0653b137;
+  background: linear-gradient(145deg, #468fe818, #121417);
+  @apply px-5 py-3 rounded-lg hover:z-[1.01] transition-transform duration-300 ease-in-out;
 }

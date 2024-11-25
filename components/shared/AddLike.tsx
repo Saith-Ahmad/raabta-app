@@ -1,47 +1,80 @@
-'use client'
+"use client";
 import { Heart } from "lucide-react";
 import { addLikeToThread } from "@/lib/actions/thread.action";
-import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
-import mongoose from "mongoose";
 
 interface Props {
-    userId: string,
-    threadId: string
+  userId: string;
+  threadId: string;
 }
 
 function AddLike({ threadId, userId }: Props) {
-    const pathname = usePathname();
-    const [likes, setLikes] = useState<string[]>([]);
-    const [isCurrentUserHasLiked, setIsCurrentUserHasLiked] = useState(false);
+  const pathname = usePathname();
+  const [likes, setLikes] = useState<string[]>([]);
+  const [number, setNumbers] = useState(0);
+  const [isCurrentUserHasLiked, setIsCurrentUserHasLiked] = useState(false);
 
-    const handleClick = async () => {
-        try {
-            const result = await addLikeToThread(threadId, userId, pathname);
-            const hasLiked = result.includes(userId);
-            setLikes(result);
-            setIsCurrentUserHasLiked(hasLiked);
-        } catch (error) {
-            console.error("Error liking the post:", error);
-        }
+  useEffect(() => {
+    const fetchInitialLikes = async () => {
+      try {
+        const initialLikes = await addLikeToThread(threadId, "", pathname);
+        setLikes(initialLikes);
+        setIsCurrentUserHasLiked(initialLikes.includes(userId));
+      } catch (error) {
+        console.error("Error fetching initial likes:", error);
+      }
     };
 
-    return (
-        <>
-        <div className={`${isCurrentUserHasLiked ? "text-red-700 font-bold" : "text-white"} hover:scale-110`}>
-        <Heart
-            size={24}
-            onClick={handleClick}
-            className={`${ isCurrentUserHasLiked && "fill-red-500 text-red-500"}`} 
-        />
-        </div>
+    fetchInitialLikes();
+  }, [threadId, userId, pathname]);
 
-        <div className="text-white">
-            {likes.length > 0 && likes?.length}
-        </div>
+  const handleClick = async () => {
+    try {
+      const result = await addLikeToThread(threadId, userId, pathname);
+      const hasLiked = result.includes(userId);
+      // Force state update by creating a new array reference
+      setLikes([result]); // Always create a new reference for the likes array
+      setIsCurrentUserHasLiked(hasLiked);
+      setNumbers((prev) => prev + 1);
+    } catch (error) {
+      console.error("Error liking the post:", error);
+    }
+  };
+
+  return (
+    <>
+      {pathname == "/" && (
+        <>
+          <div
+            className={`${
+              isCurrentUserHasLiked ? "text-red-700 font-bold" : "text-gray-400"
+            } zoom-in-hover` }
+          >
+            <div className="flex flex-row gap-1 text-sm-medium text-gray-400">
+              <Heart
+                size={24}
+                onClick={handleClick}
+                className={`${
+                  isCurrentUserHasLiked && "fill-red-500 text-red-500 "
+                }`}
+              />
+               <p className="text-sm-medium font-light">
+              {likes.length > 0 && (
+                <>
+                  {likes.length == 1
+                    ? `${likes.length} like`
+                    : `${likes.length} likes`}
+                </>
+              )}
+            </p>
+            </div>
+           
+          </div>
         </>
-    );
+      )}
+    </>
+  );
 }
 
 export default AddLike;

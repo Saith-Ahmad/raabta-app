@@ -5,6 +5,10 @@ import Link from "next/link";
 import { formatDateString } from "@/lib/utils";
 import ShareButton from "../shared/ShareButton";
 import AddLike from "../shared/AddLike";
+import DeleteThread from "../forms/DeleteThread";
+import { addLikeToThread } from "@/lib/actions/thread.action";
+import { threadId } from "worker_threads";
+import { MessageCircleMore } from "lucide-react";
 
 interface Props {
   id: string;
@@ -42,18 +46,14 @@ async function ThreadCard({
   isComment,
 }: Props) {
 
-  const idString = id.toString();
-  const userString = currentUserId.toString();
-
-
 
   return (
     <article
       className={`flex w-full flex-col rounded-xl ${
-        isComment ? "px-0 xs:px-7" : "bg-dark-2 p-7"
+        isComment ? "px-0 xs:px-7" : "bg-dark-2 thread_card_bg"
       }`}
     >
-      <div className='flex items-start justify-between'>
+      <div className='flex items-start justify-between cursor-pointer'>
         <div className='flex w-full flex-1 flex-row gap-4'>
           <div className='flex flex-col items-center'>
             <Link href={`/profile/${author.id}`} className='relative h-11 w-11'>
@@ -61,7 +61,7 @@ async function ThreadCard({
                 src={author.image}
                 alt='user_community_image'
                 fill
-                className='cursor-pointer rounded-full'
+                className='cursor-pointer rounded-full zoom-in-hover'
               />
             </Link>
 
@@ -79,23 +79,17 @@ async function ThreadCard({
 
             <div className={`${isComment && "mb-10"} mt-5 flex flex-col gap-3`}>
               <div className='flex gap-3.5'>
-                <AddLike threadId={idString} userId={userString}/>
-                <Link href={`/thread/${id}`}>
-                  <Image
-                    src='/assets/reply.svg'
-                    alt='heart'
-                    width={24}
-                    height={24}
-                    className='cursor-pointer object-contain'
+                <AddLike threadId={id.toString()} userId={currentUserId.toString()}/>
+                <div className=" text-sm-medium text-gray-400 ms-2 zoom-in-hover">
+                <Link href={`/thread/${id}`} className="flex flex-row gap-1">
+                  <MessageCircleMore
+                  size={24}
+                  strokeWidth={1}
+                  color="white"
                   />
+                <p>Comment</p>
                 </Link>
-                <Image
-                  src='/assets/repost.svg'
-                  alt='heart'
-                  width={24}
-                  height={24}
-                  className='cursor-pointer object-contain'
-                />
+                </div>
                 <ShareButton
                   postUrl={`https://raabta.vercel.app/thread/${id}`}
                 />
@@ -103,7 +97,7 @@ async function ThreadCard({
 
               {isComment && comments.length > 0 && (
                 <Link href={`/thread/${id}`}>
-                  <p className='mt-1 text-subtle-medium text-gray-1'>
+                  <p className='mt-1 text-[14px] text-gray-400'>
                     {comments.length} repl{comments.length > 1 ? "ies" : "y"}
                   </p>
                 </Link>
@@ -111,6 +105,13 @@ async function ThreadCard({
             </div>
           </div>
         </div>
+        <DeleteThread
+          threadId={JSON.stringify(id)}
+          currentUserId={currentUserId}
+          authorId={author.id}
+          parentId={parentId}
+          isComment={isComment}
+        />
       </div>
 
       {!isComment && comments.length > 0 && (
@@ -127,7 +128,7 @@ async function ThreadCard({
           ))}
 
           <Link href={`/thread/${id}`}>
-            <p className='mt-1 text-subtle-medium text-gray-1'>
+            <p className='mt-1 text-[14px] text-gray-400'>
               {comments.length} repl{comments.length > 1 ? "ies" : "y"}
             </p>
           </Link>
@@ -139,17 +140,17 @@ async function ThreadCard({
           href={`/communities/${community.id}`}
           className='mt-5 flex items-center'
         >
-          <p className='text-subtle-medium text-gray-1'>
+          <div className='text-[15px] text-gray-400 ms-2'>
             {formatDateString(createdAt)}
-            {community && ` - ${community.name} Community`}
-          </p>
+            {community && (<span><span className="text-primary-500 font-semibold"> {community.name}</span> Community</span>)}
+          </div>
 
           <Image
             src={community.image}
             alt={community.name}
-            width={14}
+            width={20}
             unoptimized
-            height={14}
+            height={20}
             className='ml-1 rounded-full object-cover'
           />
         </Link>

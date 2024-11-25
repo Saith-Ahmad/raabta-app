@@ -269,40 +269,58 @@ export async function deleteThread(id: string, path: string): Promise<void> {
   }
 }
 
-export async function addLikeToThread(threadId:string, userId:string, path:string){
+
+export async function addLikeToThread(threadId: string, userId?: string, path?: string) {
   try {
-      await connectToDB();
-      const objectIdThread = new mongoose.Types.ObjectId(threadId);
+    await connectToDB();
+    const objectIdThread = new mongoose.Types.ObjectId(threadId);
+    const thread = await Thread.findById(objectIdThread);
+
+    if (!thread) {
+      throw new Error("Thread not found");
+    }
+
+    // If `userId` is provided, toggle the like status
+    if (userId) {
       const objectIdUser = new mongoose.Types.ObjectId(userId);
-      const thread = await Thread.findById(objectIdThread);
       const user = await User.findById(objectIdUser);
 
-      if(!thread || !user){
-        throw new Error("thread or user not found");
-      }
-      const alreadyLiked = thread.likedBy.includes(user._id);
-      // if(alreadyLiked){
-      //   thread.likedBy.pull(user._id)
-      // }else{
-      //   thread.likedBy.push(user._id);
-
-      // }
-      if (!alreadyLiked) {
-        await Thread.findByIdAndUpdate(threadId, {
-          $addToSet: { likedBy: user._id }
-        });
-      } else {
-        await Thread.findByIdAndUpdate(threadId, {
-          $pull: { likedBy: user._id }
-        });
+      if (!user) {
+        throw new Error("User not found");
       }
       
+      const alreadyLiked = thread.likedBy.includes(user._id);
 
+      if (!alreadyLiked) {
+        // Add only if the user ID is not already in the array
+        await Thread.findByIdAndUpdate(threadId, {
+          $addToSet: { likedBy: user._id },
+        });
+      } 
+      // else {
+      //   // Remove the user ID from the array
+      //   await Thread.findByIdAndUpdate(threadId, {
+      //     $pull: { likedBy: user._id },
+      //   });
+      // }
+      
+
+      // Save thread after update
       await thread.save();
+      const updatedThread = await Thread.findById(threadId);
+
+
+    }
+
+    // Revalidate path only if `path` is provided
+    if (path) {
       revalidatePath(path);
-      return thread.likedBy;
-  } catch (error:any) {
-    throw new Error(`error in liked by user function"${error.message}`);
+    }
+
+    // Return the updated `likedBy` array
+    return thread.likedBy;
+  } catch (error: any) {
+    throw new Error(`Error in liked by user function: "${error.message}"`);
   }
 }
 

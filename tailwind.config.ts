@@ -173,7 +173,7 @@ module.exports = {
 	  },
 	  extend: {
 		colors: {
-		  "primary-500": "#877EFF",
+		  "primary-500": "#0653B1",
 		  "secondary-500": "#FFB620",
 		  blue: "#0095F6",
 		  "logout-btn": "#FF5A5A",
@@ -210,6 +210,11 @@ module.exports = {
 		  "accordion-down": "accordion-down 0.2s ease-out",
 		  "accordion-up": "accordion-up 0.2s ease-out",
 		},
+		backgroundImage:{
+			'gradient-1': 'linear-gradient(90deg, #1D4ED8, #9333EA)', 
+			'gradient-2': 'radial-gradient(circle, #FACC15, #F97316)', 
+			'gradient-3': 'conic-gradient(from 0deg, #434343, #434313, #434343)',
+		}
 	  },
 	},
 	plugins: [require("tailwindcss-animate")],

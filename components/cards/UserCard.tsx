@@ -19,7 +19,7 @@ function UserCard({ id, name, username, imgUrl, personType }: Props) {
   const isCommunity = personType === "Community";
 
   return (
-    <article className='user-card'>
+    <article className='user-card user_card_bg'>
       <div className='user-card_avatar'>
         <div className='relative h-12 w-12'>
           <Image
@@ -37,7 +37,7 @@ function UserCard({ id, name, username, imgUrl, personType }: Props) {
       </div>
 
       <Button
-        className='user-card_btn'
+        className='user-card_btn sidebar_left_class_active'
         onClick={() => {
           if (isCommunity) {
             router.push(`/communities/${id}`);

@@ -20,7 +20,7 @@ function Bottombar() {
             <Link
               href={link.route}
               key={link.label}
-              className={`bottombar_link ${isActive && "bg-primary-500"}`}
+              className={`bottombar_link ${isActive && "sidebar_left_class_active"} sidebar_left_class`}
             >
               <Image
                 src={link.imgURL}

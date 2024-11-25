@@ -1,5 +1,6 @@
 "use client";
 
+import { Share, Share2 } from "lucide-react";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import {
@@ -38,23 +39,19 @@ const ShareButton = ({ postUrl }: { postUrl: string }) => {
     return () => clearTimeout(timeout);
   }, [showOptions]);
 
-  const themeColor = "#4CAF50"; // Example: Your custom theme color (green)
-  const iconBgColor = "transparent"; // Transparent background for icons
+  const themeColor = "white"; 
+  const iconBgColor = "transparent"; 
 
   return (
-    <div className="relative">
+    <div className="relative" onClick={toggleOptions}>
       {/* Share button */}
-      <Image
-       src='/assets/repost.svg'
-       alt='heart'
-       width={24}
-       height={24}
-       className='cursor-pointer object-contain'
-        onClick={toggleOptions}
-      />
+        <div className="flex flex-row gap-1 text-sm-medium text-gray-400 ms-2 zoom-in-hover">
+        <Share2 strokeWidth={1} color="white" />
+        <p>Share</p>
+        </div>
 
       {showOptions && (
-        <div className="absolute top-full mt-2 flex flex-row gap-4 bg-dark-1 shadow-md p-4 rounded text-white">
+        <div className="absolute top-full mt-2 flex flex-row gap-4 sidebar_left_class_active shadow-md p-4 rounded text-white">
           <FacebookShareButton url={postUrl}>
             <FacebookIcon
               size={32}

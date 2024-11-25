@@ -6,8 +6,8 @@ function Topbar() {
   return (
     <nav className='topbar'>
       <Link href='/' className='flex items-center gap-4'>
-        <Image src='/assets/logo.svg' alt='logo' width={28} height={28} />
-        <p className='text-heading3-bold text-light-1 max-xs:hidden'>Threads</p>
+        <Image src='/assets/logo.png' alt='logo' width={40} height={40} unoptimized/>
+        <p className='text-heading3-bold text-light-1 max-xs:hidden'>Raabta</p>
       </Link>
 
       <div className='flex items-center gap-1'>
@@ -16,7 +16,7 @@ function Topbar() {
             <SignOutButton>
               <div className='flex cursor-pointer'>
                 <Image
-                  src='/assets/logout.svg'
+                  src='/assets/logout.png'
                   alt='logout'
                   width={24}
                   height={24}

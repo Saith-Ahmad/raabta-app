@@ -25,7 +25,7 @@ const LeftSidebar = () => {
             <Link
               href={link.route}
               key={link.label}
-              className={`leftsidebar_link ${isActive && "bg-primary-500 "} hover:bg-primary-500`}
+              className={`leftsidebar_link ${isActive && "sidebar_left_class_active"} sidebar_left_class`} 
             >
               <Image
                 src={link.imgURL}
@@ -41,9 +41,9 @@ const LeftSidebar = () => {
       </div>
 
       <div className='mt-10 px-6'>
-        <SignedIn>
+        <SignedIn >
           <SignOutButton>
-            <div className='flex cursor-pointer gap-4 p-4'>
+            <div className='flex cursor-pointer gap-4 p-4 zoom-in-hover'>
               <Image
                 src='/assets/logout.svg'
                 alt='logout'

@@ -52,7 +52,7 @@ function PostThread({userId}:Props) {
   return (
     <Form {...form}>
       <form
-        className='mt-10 flex flex-col justify-start gap-10'
+        className='mt-10 flex flex-col justify-start gap-10 bg-opacity-50 backdrop-blur-lg'
         onSubmit={form.handleSubmit(onSubmit)}
       >
         <FormField
@@ -71,7 +71,7 @@ function PostThread({userId}:Props) {
           )}
         />
 
-        <Button type='submit' className='bg-primary-500'>
+        <Button type='submit' className='sidebar_left_class_active'>
           Post Thread
         </Button>
       </form>

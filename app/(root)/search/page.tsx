@@ -50,9 +50,9 @@ async function Page(props: { searchParams: SearchParams }) {
     <section>
       <h1 className='head-text mb-10'>Search</h1>
 
-      <Searchbar routeType='search' />
+      <Searchbar routeType='search' placeholder="Search Creators"/>
 
-      <div className='mt-14 flex flex-col gap-9'>
+      <div className='mt-14 flex flex-col gap-3'>
         {result.users.length === 0 ? (
           <p className='no-result'>No Result</p>
         ) : (

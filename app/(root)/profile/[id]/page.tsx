@@ -19,7 +19,6 @@ export default async function Profile({ params }: { params: Promise<{ id: string
   const userInfo = await fetchUser(id);
   if (!userInfo?.onboard) redirect("/onboarding");
 
-  console.log(id);
   return (
     <section>
       <ProfileHeader

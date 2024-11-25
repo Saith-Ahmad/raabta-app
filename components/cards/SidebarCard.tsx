@@ -20,7 +20,13 @@ function SidebarCard({ id, name, username, imgUrl, personType }: Props) {
   const isCommunity = personType === "Community";
 
   return (
-    <article className='sidebarCard max-w-[250px]'>
+    <article className='sidebarCard max-w-[250px] sidebar_right_card cursor-pointer'  onClick={() => {
+      if (isCommunity) {
+        router.push(`/communities/${id}`);
+      } else {
+        router.push(`/profile/${id}`);
+      }
+    }}>
       <div className='user-card_avatar '>
         <div className='relative h-12 w-12'>
           <Image
@@ -36,15 +42,6 @@ function SidebarCard({ id, name, username, imgUrl, personType }: Props) {
           <p className='text-small-medium text-gray-1'>@{username}</p>
         </div>
       </div>
-      <SquareArrowUpRight className='text-primary-500'
-        onClick={() => {
-            if (isCommunity) {
-              router.push(`/communities/${id}`);
-            } else {
-              router.push(`/profile/${id}`);
-            }
-          }}
-      />
     </article>
   );
 }
