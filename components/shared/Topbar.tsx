@@ -14,13 +14,14 @@ function Topbar() {
         <div className='block md:hidden'>
           <SignedIn>
             <SignOutButton>
-              <div className='flex cursor-pointer'>
+              <div className='flex gap-1 cursor-pointer logout_btn_bg'>
                 <Image
-                  src='/assets/logout.png'
+                  src='/assets/logout.svg'
                   alt='logout'
                   width={24}
                   height={24}
                 />
+                <p className="text-gray-300">Logout</p>
               </div>
             </SignOutButton>
           </SignedIn>

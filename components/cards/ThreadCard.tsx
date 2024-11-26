@@ -87,7 +87,6 @@ async function ThreadCard({
                   strokeWidth={1}
                   color="white"
                   />
-                <p>Comment</p>
                 </Link>
                 </div>
                 <ShareButton

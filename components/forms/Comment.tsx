@@ -19,12 +19,14 @@ import { Button } from "../ui/button";
 
 import { CommentValidation } from "@/lib/validations/threads";
 import { addCommentToThread } from "@/lib/actions/thread.action";
+import { useState } from "react";
 interface Props {
     threadId: string,
     currentUserImg: string,
     currentUserId: string
 }
 function Comment({ threadId, currentUserId, currentUserImg }: Props) {
+    const [isLoading, setIsLoading ] = useState(false);
     const pathname = usePathname();
     const form = useForm<z.infer<typeof CommentValidation>>({
         resolver: zodResolver(CommentValidation),
@@ -34,14 +36,22 @@ function Comment({ threadId, currentUserId, currentUserImg }: Props) {
     });
 
     const onSubmit = async (values: z.infer<typeof CommentValidation>) => {
-        await addCommentToThread(
-            threadId, 
-            values.thread,
-            JSON.parse(currentUserId),
-            pathname
-        );
-
-        form.reset();
+        try {
+            setIsLoading(true);
+            await addCommentToThread(
+                threadId, 
+                values.thread,
+                JSON.parse(currentUserId),
+                pathname
+            );
+    
+            form.reset();
+            setIsLoading(false);
+        } catch (error) {
+            
+        }finally{
+            setIsLoading(false);
+        }
       };
     return (
         <Form {...form}>
@@ -73,7 +83,7 @@ function Comment({ threadId, currentUserId, currentUserImg }: Props) {
                 />
 
                 <Button type='submit' className='comment-form_btn'>
-                    Reply
+                    {!isLoading ? "Reply" : "Aadding Reply..."}
                 </Button>
             </form>
         </Form>

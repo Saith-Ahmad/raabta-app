@@ -11,6 +11,9 @@ interface Props {
 
 function AddLike({ threadId, userId }: Props) {
   const pathname = usePathname();
+  if(pathname !=='/'){
+    return null!
+  }
   const [likes, setLikes] = useState<string[]>([]);
   const [number, setNumbers] = useState(0);
   const [isCurrentUserHasLiked, setIsCurrentUserHasLiked] = useState(false);
@@ -44,7 +47,6 @@ function AddLike({ threadId, userId }: Props) {
 
   return (
     <>
-      {pathname == "/" && (
         <>
           <div
             className={`${
@@ -55,16 +57,18 @@ function AddLike({ threadId, userId }: Props) {
               <Heart
                 size={24}
                 onClick={handleClick}
+                color="white"
+                strokeWidth={1}
                 className={`${
-                  isCurrentUserHasLiked && "fill-red-500 text-red-500 "
+                  isCurrentUserHasLiked && "fill-red-500 text-red-500"
                 }`}
               />
                <p className="text-sm-medium font-light">
               {likes.length > 0 && (
                 <>
                   {likes.length == 1
-                    ? `${likes.length} like`
-                    : `${likes.length} likes`}
+                    ? `${likes.length}`
+                    : `${likes.length}`}
                 </>
               )}
             </p>
@@ -72,7 +76,6 @@ function AddLike({ threadId, userId }: Props) {
            
           </div>
         </>
-      )}
     </>
   );
 }

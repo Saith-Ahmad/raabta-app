@@ -146,33 +146,70 @@ export async function fetchThreadById(threadId: string) {
 }
 
 
+// export async function addCommentToThread(
+//     threadId : string,
+//     commentText : string,
+//     userId : string,
+//     path : string
+// ){
+//     try {
+//         //Find the original Thread By Its Id
+//         const objectId = new mongoose.Types.ObjectId(threadId);
+//         const originalThread = await Thread.findById(objectId)
+//         if(!originalThread){
+//             throw new Error("Thread Not Found");
+//         }
+
+//         const commentThread = new Thread({
+//             text : commentText,
+//             author : userId,
+//             parentId : threadId
+//         })
+//         const saveCommentThread = await commentThread.save();
+//         originalThread.children.push(saveCommentThread._id);
+//         await originalThread.save();
+//         revalidatePath(path);
+
+//     } catch (error: any) {
+//         throw new Error(`failed to add comment to thread ${error.message}`)
+//     }
+// }
+
 export async function addCommentToThread(
-    threadId : string,
-    commentText : string,
-    userId : string,
-    path : string
+  threadId : string,
+  commentText : string,
+  userId : string,
+  path : string
 ){
-    try {
-        //Find the original Thread By Its Id
-        const objectId = new mongoose.Types.ObjectId(threadId);
-        const originalThread = await Thread.findById(objectId)
-        if(!originalThread){
-            throw new Error("Thread Not Found");
-        }
+  try {
+      //Find the original Thread By Its Id
+      const objectId = new mongoose.Types.ObjectId(threadId);
+      const originalThread = await Thread.findById(objectId)
+      if(!originalThread){
+          throw new Error("Thread Not Found");
+      }
+      const objectIdUser = new mongoose.Types.ObjectId(userId);
+      const OriginalUser = await User.findById(objectIdUser);
 
-        const commentThread = new Thread({
-            text : commentText,
-            author : userId,
-            parentId : threadId
-        })
-        const saveCommentThread = await commentThread.save();
-        originalThread.children.push(saveCommentThread._id);
-        await originalThread.save();
-        revalidatePath(path);
+      if(!OriginalUser){
+        throw new Error("User Not Found");
+      }
 
-    } catch (error: any) {
-        throw new Error(`failed to add comment to thread ${error.message}`)
-    }
+      const commentThread = new Thread({
+          text : commentText,
+          author : userId,
+          parentId : threadId
+      })
+      const saveCommentThread = await commentThread.save();
+      originalThread.children.push(saveCommentThread._id);
+      OriginalUser.threads.push(saveCommentThread._id);
+      await originalThread.save();
+      await OriginalUser.save();
+      revalidatePath(path);
+
+  } catch (error: any) {
+      throw new Error(`failed to add comment to thread ${error.message}`)
+  }
 }
 
 

@@ -4,7 +4,7 @@ import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { useOrganization } from "@clerk/nextjs";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { usePathname, useRouter } from "next/navigation"; 
+import { usePathname, useRouter } from "next/navigation";
 
 import {
   Form,
@@ -18,14 +18,14 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { ThreadValidation } from "@/lib/validations/threads";
 import { createThread } from "@/lib/actions/thread.action";
+import { useState } from "react";
 
 interface Props {
-    userId: string;
+  userId: string;
 }
-  
 
-function PostThread({userId}:Props) {
-    
+function PostThread({ userId }: Props) {
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
 
@@ -40,30 +40,39 @@ function PostThread({userId}:Props) {
   });
 
   const onSubmit = async (values: z.infer<typeof ThreadValidation>) => {
-    await createThread({
-      text: values.thread,
-      author: userId,
-      communityId: organization ? organization.id : null,
-      path: pathname,
-    });
+    try {
+      setIsLoading(true)
+      await createThread({
+        text: values.thread,
+        author: userId,
+        communityId: organization ? organization.id : null,
+        path: pathname,
+      });
 
-    router.push("/");
+      router.push("/");
+      setIsLoading(false)
+    } catch (error) {
+      router.push("/");
+    } finally {
+      router.push("/");
+      setIsLoading(false)
+    }
   };
   return (
     <Form {...form}>
       <form
-        className='mt-10 flex flex-col justify-start gap-10 bg-opacity-50 backdrop-blur-lg'
+        className="mt-10 flex flex-col justify-start gap-10 bg-opacity-50 backdrop-blur-lg"
         onSubmit={form.handleSubmit(onSubmit)}
       >
         <FormField
           control={form.control}
-          name='thread'
+          name="thread"
           render={({ field }) => (
-            <FormItem className='flex w-full flex-col gap-3'>
-              <FormLabel className='text-base-semibold text-light-2'>
+            <FormItem className="flex w-full flex-col gap-3">
+              <FormLabel className="text-base-semibold text-light-2">
                 Content
               </FormLabel>
-              <FormControl className='no-focus border border-dark-4 bg-dark-3 text-light-1'>
+              <FormControl className="no-focus border border-dark-4 bg-dark-3 text-light-1">
                 <Textarea rows={15} {...field} />
               </FormControl>
               <FormMessage />
@@ -71,12 +80,12 @@ function PostThread({userId}:Props) {
           )}
         />
 
-        <Button type='submit' className='sidebar_left_class_active'>
-          Post Thread
+        <Button type="submit" className="sidebar_left_class_active">
+          {!isLoading ? "Post Thread" : "Posting..."}
         </Button>
       </form>
     </Form>
-  )
+  );
 }
 
-export default PostThread
+export default PostThread;
