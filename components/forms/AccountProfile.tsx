@@ -38,6 +38,7 @@ interface Props {
 }
 
 const AccountProfile = ({ user, btnTitle }: Props) => {
+  const [isLoading, setIsLoading] = useState(false);
   const { startUpload } = useUploadThing("media");
   const router = useRouter();
   const pathname = usePathname();
@@ -55,7 +56,9 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
   });
 
   const onSubmit = async (values: z.infer<typeof UserValidation>) => {
-    const blob = values.profile_photo;
+    try {
+      setIsLoading(true)
+      const blob = values.profile_photo;
 
     const hasImageChanged = isBase64Image(blob);
     if (hasImageChanged) {
@@ -76,12 +79,17 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
       path : pathname 
     });
 
-    console.log("result,", result);
-
     if(pathname === '/profile/edit'){
       router.back();
     }else{
       router.push('/');
+    }
+    setIsLoading(false)
+      
+    } catch (error) {
+      setIsLoading(false)
+    }finally{
+      setIsLoading(false)
     }
   };
 
@@ -209,11 +217,10 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
         />
 
         <Button type='submit' className='bg-primary-500'>
-          {btnTitle}
+          {!isLoading? btnTitle : "Onboarding..."}
         </Button>
       </form>
     </Form>
   );
 };
-
 export default AccountProfile;

@@ -1,13 +1,11 @@
 import { Inter, Ubuntu } from "next/font/google";
 import "../globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
-import { dark, neobrutalism, shadesOfPurple } from "@clerk/themes";
+import { dark } from "@clerk/themes";
 import Topbar from "@/components/shared/Topbar";
 import Bottombar from "@/components/shared/Bottombar";
 import LeftSidebar from "@/components/shared/LeftSidebar";
 import RightSidebar from "@/components/shared/RightSidebar";
-import DotPattern from "@/components/ui/dot-pattern";
-import { cn } from "@/lib/utils";
 
 export const metadata = {
   title: "Raabta",
@@ -38,16 +36,6 @@ export default function RootLayout({
             <LeftSidebar />
             <section className="main-container">
              <div className="">
-             <DotPattern
-                width={15}
-                height={15}
-                cx={1}
-                cy={1}
-                cr={1}
-                className={cn(
-                  "[mask-image:linear-gradient(to_bottom_right,white,transparent,transparent)] "
-                )}
-              />
              </div>
               <div className="w-full max-w-4xl">{children}</div>
             </section>
