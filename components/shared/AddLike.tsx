@@ -53,11 +53,10 @@ function AddLike({ threadId, userId }: Props) {
               isCurrentUserHasLiked ? "text-red-700 font-bold" : "text-gray-400"
             } zoom-in-hover` }
           >
-            <div className="flex flex-row gap-1 text-sm-medium text-gray-400">
+            <div className="flex flex-row gap-1 text-sm-medium text-white">
               <Heart
                 size={24}
                 onClick={handleClick}
-                color="white"
                 strokeWidth={1}
                 className={`${
                   isCurrentUserHasLiked && "fill-red-500 text-red-500"
