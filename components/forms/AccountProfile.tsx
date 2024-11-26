@@ -216,7 +216,7 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
           )}
         />
 
-        <Button type='submit' className='bg-primary-500'>
+        <Button type='submit' className='sidebar_left_class_active'>
           {!isLoading? btnTitle : "Onboarding..."}
         </Button>
       </form>
