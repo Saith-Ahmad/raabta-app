@@ -2,8 +2,8 @@ import { Inter } from "next/font/google"
 import '../globals.css'
 import { ClerkProvider } from "@clerk/nextjs"
 import { dark, neobrutalism, shadesOfPurple } from '@clerk/themes'
-import DotPattern from "@/components/ui/dot-pattern"
-import { cn } from "@/lib/utils"
+// import DotPattern from "@/components/ui/dot-pattern"
+// import { cn } from "@/lib/utils"
 
 
 export const metadata = { 
@@ -24,7 +24,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
             <html>
                 <body className={`${inter.className} bg-dark-1`}>
                     <div className="w-full flex justify-center items-center min-h-screen my-10">
-                    <DotPattern
+                    {/* <DotPattern
                     width={20}
                     height={20}
                     cx={1}
@@ -33,7 +33,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
                     className={cn(
                       "[mask-image:linear-gradient(to_bottom_right,white,transparent,transparent)] ",
                     )}
-                    />
+                    /> */}
                         {children}
                     </div>
                 </body>
