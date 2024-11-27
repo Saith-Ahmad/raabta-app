@@ -2,6 +2,7 @@
 
 import * as z from "zod";
 import { useForm } from "react-hook-form";
+import { useToast } from "@/hooks/use-toast"
 import { useOrganization } from "@clerk/nextjs";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { usePathname, useRouter } from "next/navigation";
@@ -25,6 +26,7 @@ interface Props {
 }
 
 function PostThread({ userId }: Props) {
+  const { toast } = useToast()
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
@@ -51,6 +53,10 @@ function PostThread({ userId }: Props) {
 
       router.push("/");
       setIsLoading(false)
+      toast({
+        title: "Thread Added Sucessfully",
+        variant:"dark"
+      })
     } catch (error) {
       router.push("/");
     } finally {

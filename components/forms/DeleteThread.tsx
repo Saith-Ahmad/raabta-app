@@ -1,8 +1,8 @@
 "use client";
 
 import { deleteThread } from "@/lib/actions/thread.action";
+import { useToast } from "@/hooks/use-toast"
 import { Trash2 } from "lucide-react";
-import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 
 interface Props {
@@ -24,6 +24,7 @@ function DeleteThread({
   const router = useRouter();
 
   if (currentUserId !== authorId || pathname === "/") return null;
+  const { toast } = useToast()
 
   return (
     <div>
@@ -33,9 +34,14 @@ function DeleteThread({
         className="cursor-pointer hover:text-red-700 hover:scale-110"
         onClick={async () => {
           await deleteThread(JSON.parse(threadId), pathname);
+          toast({
+            title: "Thread Deleted Sucessfully",
+            variant:"dark",
+          })
           if (!parentId || !isComment) {
             router.push("/");
           }
+          
         }}
       />
     </div>

@@ -6,6 +6,7 @@ import Topbar from "@/components/shared/Topbar";
 import Bottombar from "@/components/shared/Bottombar";
 import LeftSidebar from "@/components/shared/LeftSidebar";
 import RightSidebar from "@/components/shared/RightSidebar";
+import { Toaster } from "@/components/ui/toaster";
 
 export const metadata = {
   title: "Raabta",
@@ -38,6 +39,7 @@ export default function RootLayout({
              <div className="">
              </div>
               <div className="w-full max-w-4xl">{children}</div>
+              <Toaster />
             </section>
             <RightSidebar />
           </main>

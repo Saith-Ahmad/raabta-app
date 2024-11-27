@@ -1,6 +1,7 @@
 "use client";
 
 import { z } from "zod";
+import { useToast } from "@/hooks/use-toast"
 import Image from "next/image";
 import { useForm } from "react-hook-form";
 import { usePathname } from "next/navigation";
@@ -26,6 +27,7 @@ interface Props {
     currentUserId: string
 }
 function Comment({ threadId, currentUserId, currentUserImg }: Props) {
+    const { toast } = useToast()
     const [isLoading, setIsLoading ] = useState(false);
     const pathname = usePathname();
     const form = useForm<z.infer<typeof CommentValidation>>({
@@ -47,6 +49,10 @@ function Comment({ threadId, currentUserId, currentUserImg }: Props) {
     
             form.reset();
             setIsLoading(false);
+            toast({
+                title: "Comment Added Sucessfully",
+                variant:"dark"
+              })
         } catch (error) {
             
         }finally{
