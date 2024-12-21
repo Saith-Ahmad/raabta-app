@@ -151,6 +151,9 @@
 .account-form_image-input {
   @apply cursor-pointer border-none bg-transparent outline-none file:text-blue !important;
 }
+.thread-form_image-input {
+  @apply cursor-pointer border-none  outline-none file:text-blue !important;
+}
 
 .account-form_input {
   @apply border border-dark-4 bg-dark-2 text-light-1 !important;

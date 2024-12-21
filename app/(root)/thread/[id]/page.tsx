@@ -30,6 +30,7 @@ export default async function Page({params,}: {params: Promise<{ id: string }>})
             community={thread.community}
             createdAt={thread.createdAt}
             comments={thread.children}
+            threadImage={thread.threadImage}
         />
        </div>
 

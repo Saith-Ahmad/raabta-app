@@ -10,6 +10,15 @@ import { addLikeToThread } from "@/lib/actions/thread.action";
 import { threadId } from "worker_threads";
 import { MessageCircleMore } from "lucide-react";
 
+function isValidUrl(url: string): boolean {
+  try {
+    new URL(url); // If it's not a valid URL, this will throw
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 interface Props {
   id: string;
   currentUserId: string;
@@ -32,9 +41,11 @@ interface Props {
     };
   }[];
   isComment?: boolean;
+  threadImage?: string,
 }
 
 async function ThreadCard({
+  threadImage,
   id,
   currentUserId,
   parentId,
@@ -45,13 +56,10 @@ async function ThreadCard({
   comments,
   isComment,
 }: Props) {
-
-
   return (
     <article
-      className={`flex w-full flex-col rounded-xl ${
-        isComment ? "px-0 xs:px-7" : "bg-dark-2 thread_card_bg"
-      }`}
+      className={`flex w-full flex-col rounded-xl ${isComment ? "px-0 xs:px-7" : "bg-dark-2 thread_card_bg"
+        }`}
     >
       <div className='flex items-start justify-between cursor-pointer'>
         <div className='flex w-full flex-1 flex-row gap-4'>
@@ -76,18 +84,35 @@ async function ThreadCard({
             </Link>
 
             <p className='mt-2 text-small-regular text-light-2'>{content}</p>
+            {threadImage && threadImage.length > 10 && isValidUrl(threadImage) && (
+              <Link href={`/thread/${id}`}>
+                <div className="w-full rounded-2xl mt-4 shadow-md shadow-[#ffffff35]">
+                <Image
+                  src={threadImage}
+                  alt={content.slice(0, 10)}
+                  layout="responsive"
+                  width={0}
+                  height={0}
+                  className="rounded-xl"
+                  quality={95}
+                  placeholder="blur"
+                  blurDataURL="/assets/technology.webp"
+                />
+              </div>
+              </Link>
+            )}
 
             <div className={`${isComment && "mb-10"} mt-5 flex flex-col gap-3`}>
               <div className='flex gap-3.5'>
-                <AddLike threadId={id.toString()} userId={currentUserId.toString()}/>
+                <AddLike threadId={id.toString()} userId={currentUserId.toString()} />
                 <div className=" text-sm-medium text-gray-400 ms-2 zoom-in-hover">
-                <Link href={`/thread/${id}`} className="flex flex-row gap-1">
-                  <MessageCircleMore
-                  size={24}
-                  strokeWidth={1}
-                  color="white"
-                  />
-                </Link>
+                  <Link href={`/thread/${id}`} className="flex flex-row gap-1">
+                    <MessageCircleMore
+                      size={24}
+                      strokeWidth={1}
+                      color="white"
+                    />
+                  </Link>
                 </div>
                 <ShareButton
                   postUrl={`https://raabta.vercel.app/thread/${id}`}

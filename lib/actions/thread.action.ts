@@ -10,11 +10,13 @@ interface Params {
     text: string,
     author: string,
     communityId: string | null,
-    path: string
+    path: string,
+    threadImage? : String
 }
 
 
-export async function createThread({ text, author, communityId, path }: Params) {
+export async function createThread({ text, author, communityId, path, threadImage }: Params) {
+  console.log(threadImage);
     try {
         await connectToDB();
 
@@ -25,6 +27,7 @@ export async function createThread({ text, author, communityId, path }: Params) 
 
         const createdThread = await Thread.create({
             text,
+            threadImage,
             author,
             createdAt : Date.now(),
             community: communityIdObject,

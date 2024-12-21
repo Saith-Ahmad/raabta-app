@@ -4,7 +4,6 @@ import { redirect } from "next/navigation";
 import ThreadCard from "@/components/cards/ThreadCard";
 import { fetchPosts } from "@/lib/actions/thread.action";
 import { fetchUser } from "@/lib/actions/user.actions";
-import ShareButton from "@/components/shared/ShareButton";
 
 async function Home() {
   const user = await currentUser();
@@ -24,25 +23,28 @@ async function Home() {
           <p className='no-result'>No threads found</p>
         ) : (
           <>
-            {result.posts.map((post) => (
-              <ThreadCard
-                key={post._id}
-                id={post._id.toString()}
-                currentUserId={userInfo?._id.toString()}
-                parentId={post.parentId}
-                content={post.text}
-                author={post.author}
-                community={post.community}
-                createdAt={post.createdAt}
-                comments={post.children}
-              />
-            ))}
+            {result.posts.map((post) => {
+              return (
+                <ThreadCard
+                  key={post._id}
+                  id={post._id.toString()}
+                  currentUserId={userInfo?._id.toString()}
+                  parentId={post.parentId}
+                  content={post.text}
+                  author={post.author}
+                  community={post.community}
+                  createdAt={post.createdAt}
+                  comments={post.children}
+                  threadImage={post.threadImage}
+                />
+              )
+            })}
           </>
         )}
 
       </section>
     </>
-    
+
   );
 }
 

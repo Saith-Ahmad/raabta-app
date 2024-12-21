@@ -56,7 +56,7 @@ export default async function Community({ params }: { params: Promise<{ id: stri
 
 
           <TabsContent value='members' className='mt-9 w-full text-light-1'>
-            <section className='mt-9 flex flex-col gap-10'>
+            <section className='mt-9 flex flex-col gap-2'>
               {communityDetails.members.map((member: any) => (
                 <UserCard
                   key={member.id}
