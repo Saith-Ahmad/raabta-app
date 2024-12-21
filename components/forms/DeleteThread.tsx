@@ -31,7 +31,7 @@ function DeleteThread({
       <Trash2
         size={18}
         strokeWidth={3}
-        className="cursor-pointer hover:text-red-700 hover:scale-110"
+        className="cursor-pointer hover:text-red-700 hover:scale-110 text-white"
         onClick={async () => {
           await deleteThread(JSON.parse(threadId), pathname);
           toast({
